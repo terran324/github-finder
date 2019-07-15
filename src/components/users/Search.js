@@ -6,15 +6,17 @@ export class Search extends Component {
                // In this case, it is the form, with the name of 'search'
   };
 
-  onChange = (e) => {
-    console.log("event target name:" + e.target.name);
-    this.setState({[e.target.name]: e.target.value});
+  onSubmit = (e) => { // The `this` keyword works differently with arrow functions!
+    e.preventDefault();
+    console.log(this.state.search);
   }
+
+  onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
   render() {
     return (
       <div>
-        <form className="form">
+        <form onSubmit={this.onSubmit} className="form">
           <input 
             type="text" 
             name="search" 
