@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 export class Search extends Component {
   state = {
@@ -6,10 +7,15 @@ export class Search extends Component {
                // In this case, it is the form, with the name of 'search'
   };
 
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired
+  };
+
   onSubmit = (e) => { // The `this` keyword works differently with arrow functions!
     e.preventDefault();
-    console.log(this.state.search);
-  }
+    this.props.searchUsers(this.state.search);
+    this.setState({text:''});
+  };
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
@@ -21,7 +27,7 @@ export class Search extends Component {
             type="text" 
             name="search" 
             placeholder="Search Users..." 
-            value={this.state.text}
+            value={this.state.search}
             onChange={this.onChange}
           />
           <input type="submit" value="Search" className="btn btn-dark btn-block"/>
