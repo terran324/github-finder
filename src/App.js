@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import Navbar from "./components/layout/Navbar";
-import Users from "./components/users/Users";
-import Search from "./components/users/Search";
-import Axios from "axios";
+import React, { Component } from 'react';
+import Navbar from './components/layout/Navbar';
+import Users from './components/users/Users';
+import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
+import Axios from 'axios';
 
-import "./App.css";
+import './App.css';
 
 class App extends Component {
   state = {
     users: [],
-    loading: false
+    loading: false,
+    alert: null
   };
 
   /* Commented this away because we don't want users to show up when we havent searched for anything */
@@ -38,17 +40,26 @@ class App extends Component {
   // Clear users from state
   clearUsers = () => this.setState({ users: [], loading: false });
 
+  // Set Alert
+  setAlert = (message, type) => {
+    this.setState({ alert: { message, type } }); // alert: { message: message, type: type }, can be shrunk to this.
+  
+    setTimeout(() => this.setState({alert: null}), 5000);
+  };
+
   render() {
     const { users, loading } = this.state;
 
     return (
-      <div className="App">
-        <Navbar title="Github Finder" icon="fab fa-github" />
-        <div className="container">
+      <div className='App'>
+        <Navbar title='Github Finder' icon='fab fa-github' />
+        <div className='container'>
+          <Alert alert={this.state.alert}/>
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users loading={loading} users={users} />
         </div>
