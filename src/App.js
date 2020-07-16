@@ -11,22 +11,11 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
-    alert: null
+    alert: null,
   };
 
-  /* Commented this away because we don't want users to show up when we havent searched for anything */
-  // async componentDidMount() {
-  //   this.setState({ loading: true });
-
-  //   const res = await Axios.get(`https://api.github.com/users?client_id=
-  //     ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-  //     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-
-  //   this.setState({ users: res.data, loading: false });
-  // }
-
   // Search Github users
-  searchUsers = async text => {
+  searchUsers = async (text) => {
     this.setState({ loading: true });
     console.log(`Searched for: ${text}`);
 
@@ -43,18 +32,19 @@ class App extends Component {
   // Set Alert
   setAlert = (message, type) => {
     this.setState({ alert: { message, type } }); // alert: { message: message, type: type }, can be shrunk to this.
-  
-    setTimeout(() => this.setState({alert: null}), 5000);
+
+    // After 5 seconds, set the alert component back to null (hide it)
+    setTimeout(() => this.setState({ alert: null }), 5000);
   };
 
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, alert } = this.state;
 
     return (
       <div className='App'>
         <Navbar title='Github Finder' icon='fab fa-github' />
         <div className='container'>
-          <Alert alert={this.state.alert}/>
+          <Alert alert={alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}

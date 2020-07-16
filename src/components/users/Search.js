@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 export class Search extends Component {
   state = {
-    search: '' // The name of this key has to be equal to the name of the component that will be affected.
+    search: '',
+    // The name of this key has to be equal to the name of the component that will be affected.
     // In this case, it is the form, with the name of 'search'
   };
 
@@ -14,19 +15,19 @@ export class Search extends Component {
     setAlert: PropTypes.func.isRequired,
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     // The `this` keyword works differently with arrow functions!
     // The default behaviour of a button is to submit a form
     e.preventDefault();
     if (this.state.search === '') {
-      this.props.setAlert('Please enter a name', 'light')
+      this.props.setAlert('Please enter a name', 'light');
     } else {
       this.props.searchUsers(this.state.search);
       this.setState({ text: '' });
     }
   };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     const { showClear, clearUsers } = this.props;
